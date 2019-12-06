@@ -93,11 +93,12 @@
   <ItemGroup>
     <ClCompile Include="source\neon_graphics.cc" />
     <ClCompile Include="source\neon_testbed.cc" />
+    <ClCompile Include="source\cube.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\neon_graphics.h" />
     <ClInclude Include="include\neon_testbed.h" />
-    <ClInclude Include="include\square.h" />
+    <ClInclude Include="include\cube.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

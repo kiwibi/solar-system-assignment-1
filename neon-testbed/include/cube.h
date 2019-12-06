@@ -10,11 +10,10 @@ struct cube {
 		float x_, y_, z_;
 		float u_, v_;
 	};
-	cube();
-   cube(float orbitDistance, float orbitSpeed, float rotationSpeed, glm::vec2 tilt, float size);
-	virtual bool enter() final;
+   cube(float orbitDistance, float orbitSpeed, float rotationSpeed, glm::vec2 tilt, glm::vec3 pos, float size, const char* texFilePath);
+	virtual bool enter(const char* texFilePath) final;
 	virtual void exit() final;
-	virtual bool tick(int deltaTime) final;
+	virtual bool tick(float deltaTime) final;
 
 	neon::shader_program program_;
 	neon::vertex_buffer vbo_;
@@ -24,9 +23,12 @@ struct cube {
 
    cube* orbitPoint_;
    float orbitDistance_;
+   float orbit_; // How far around the planetoid has gone around it's axis.
    float orbitSpeed_;
+   float rotation_;
    float rotationSpeed_;
-   glm::vec2 tilt;
+   glm::vec2 tilt_;
+   glm::vec3 pos_;
    float size_;   // the size of a side of the square
 };
 
