@@ -66,7 +66,24 @@ namespace neon {
 			return false;
 		}
 
-      bodies_[0] = new cube(0.0f, 0.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(0.0f, 0.0f, -50.0f), 5.0f, "assets/sun.png", &program_);
+      bodies_[0] = new cube(0.0f, 0.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(0.0f, 0.0f, -90), 2.0f, "assets/sun.png", &program_); //sun
+	  bodies_[1] = new cube(10.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[2] = new cube(15.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[3] = new cube(20.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[4] = new cube(25.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[5] = new cube(30.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[6] = new cube(35.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[7] = new cube(40.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[8] = new cube(45.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+	  bodies_[9] = new cube(50.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+
+	  bodies_[10] = new cube(4.0f, 6.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);//moon
+
+	  for (int i = 1; i < 10; i++)
+	  {
+		bodies_[i]->orbitPoint_ = bodies_[0];
+	  }
+	  bodies_[10]->orbitPoint_ = bodies_[3];
 
 	   //	note: uniforms
 		glm::mat4 projection_ = glm::perspective(glm::radians(45.0f), 
@@ -104,8 +121,10 @@ namespace neon {
 	  glCullFace(GL_BACK);
 	  glFrontFace(GL_CW);
 
-
-     bodies_[0]->tick(dt.as_milliseconds());
+	  for (int i = 0; i < 11; i++)
+	  {
+		  bodies_[i]->tick(dt.as_milliseconds());
+	  }
 
 	  /*glEnable(GL_BLEND);
 	  glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);

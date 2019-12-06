@@ -117,7 +117,7 @@ bool cube::tick(float deltaTime) {
 
    // Position logic
    if (orbitPoint_ != nullptr){
-      orbit_ += orbitSpeed_ * deltaTime; // Orbit = radians
+      orbit_ += orbitSpeed_ * deltaTime /1000; // Orbit = radians
       
       pos_.x = orbitPoint_->pos_.x + glm::cos(orbit_) * orbitDistance_;
       pos_.y = orbitPoint_->pos_.y +  glm::sin(orbit_) * orbitDistance_;
