@@ -10,16 +10,15 @@ struct cube {
 		float x_, y_, z_;
 		float u_, v_;
 	};
-   cube(float orbitDistance, float orbitSpeed, float rotationSpeed, glm::vec2 tilt, glm::vec3 pos, float size, const char* texFilePath);
+   cube(float orbitDistance, float orbitSpeed, float rotationSpeed, glm::vec2 tilt, glm::vec3 pos, float size, const char* texFilePath, neon::shader_program* shader_program);
 	virtual bool enter(const char* texFilePath) final;
 	virtual void exit() final;
 	virtual bool tick(float deltaTime) final;
 
-	neon::shader_program program_;
+	neon::shader_program* program_;
 	neon::vertex_buffer vbo_;
 	neon::vertex_format format_;
 	neon::texture texture_;
-	neon::sampler_state sampler_;
 
    cube* orbitPoint_;
    float orbitDistance_;

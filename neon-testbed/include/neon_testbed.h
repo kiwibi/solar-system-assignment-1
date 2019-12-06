@@ -7,6 +7,7 @@
 #include <neon_opengl.h>
 
 #include "neon_graphics.h"
+#include "cube.h"
 
 namespace neon {
 	struct vertex {
@@ -27,6 +28,8 @@ namespace neon {
 	  sampler_state sampler_;
 
 	  float rotation_;
+
+     cube * bodies_[11];
    };
 } // !neon
 

@@ -56,106 +56,25 @@ namespace neon {
    }
 
    bool testbed::enter() {
-	   GLuint vao = 0;	//vertex array object
-	   glGenVertexArrays(1, &vao);
-	   glBindVertexArray(vao);
-
-		//glEnable(GL_TEXTURE_2D);
-	   //	Big triangles
-	   vertex vertices[] =
-	   {
-		   //triangle 1 side 1
-		   {  1.0f,  1.0f, 1.0f,			0xff0000ff,		1.0f, 1.0f},
-		   {  1.0f, -1.0f, 1.0f,			0xff00ff00,		1.0f, 0.0f},
-		   { -1.0f, -1.0f, 1.0f,			0xffff0000,		0.0f, 0.0f},
-			//triangle 1 side 1
-			{  1.0f,  1.0f, 1.0f,			0xff0000ff,		1.0f, 1.0f},
-			{  -1.0f, -1.0f, 1.0f,			0xff00ff00,		0.0f, 0.0f},
-			{ -1.0f, 1.0f, 1.0f,				0xffff0000,		0.0f, 1.0f},
-
-		   //triangle 2 side 2
-			{  1.0f,  1.0f, 1.0f,			0xff0000ff,		1.0f, 1.0f},
-			{  1.0f, -1.0f, -1.0f,			0xffff0000,		0.0f, 0.0f},
-			{  1.0f, -1.0f, 1.0f,			0xff00ff00,		0.0f, 1.0f},
-			//triangle 2 side 2
-			{  1.0f,  1.0f, 1.0f,			0xff0000ff,		1.0f, 1.0f},
-			{  1.0f, 1.0f, -1.0f,			0xff00ff00,		1.0f, 0.0f},
-			{ 1.0f, -1.0f, -1.0f,			0xffff0000,		0.0f, 0.0f},
-
-			//triangle 3 side 2
-			{  1.0f,  1.0f, -1.0f,			0xff0000ff,		1.0f, 1.0f},
-			{  -1.0f, -1.0f, -1.0f,			0xffff0000,		0.0f, 0.0f},
-			{  1.0f, -1.0f, -1.0f,			0xff00ff00,		1.0f, 0.0f},
-			//triangle 3 side 2
-			{  1.0f,  1.0f, -1.0f,			0xff0000ff,		1.0f, 1.0f},
-			{  -1.0f, 1.0f, -1.0f,			0xff00ff00,		0.0f, 1.0f},
-			{ -1.0f, -1.0f, -1.0f,			0xffff0000,		0.0f, 0.0f},
-
-			//triangle 4 side 2
-			{  -1.0f,  1.0f, -1.0f,			0xff0000ff,		1.0f, 0.0f},
-			{  -1.0f, -1.0f, 1.0f,			0xffff0000,		0.0f, 1.0f},
-			{  -1.0f, -1.0f, -1.0f,			0xff00ff00,		0.0f, 0.0f},
-			//triangle 4 side 2
-			{  -1.0f,  1.0f, -1.0f,			0xff0000ff,		1.0f, 0.0f},
-			{  -1.0f, 1.0f, 1.0f,			0xff00ff00,		1.0f, 1.0f},
-			{ -1.0f, -1.0f, 1.0f,			0xffff0000,		0.0f, 1.0f},
-
-			// Triangle 1, side 5
-			{ -1.0f ,  1.0f,  1.0f,    0xff0000ff,     0.0f, 1.0f  },
-			{  1.0f ,  1.0f, -1.0f,    0xffff0000,     1.0f, 0.0f  },
-			{  1.0f ,  1.0f,  1.0f,    0xff00ff00,     1.0f, 1.0f  },
-			// Triangle 2, side 5      
-			{ -1.0f ,  1.0f, -1.0f,    0xff4b3319,     0.0f, 0.0f  },
-			{  1.0f ,  1.0f, -1.0f,    0xff4b3319,     1.0f, 0.0f  },
-			{ -1.0f ,  1.0f,  1.0f,    0xff4b3319,     0.0f, 1.0f  },
-
-			// Triangle 1, side 6
-			{ -1.0f , -1.0f,  1.0f,    0xff0000ff,     0.0f, 1.0f  },
-			{  1.0f , -1.0f,  1.0f,    0xff00ff00,     1.0f, 1.0f  },
-			{  1.0f , -1.0f, -1.0f,    0xffff0000,     1.0f, 0.0f  },
-			// Triangle 2, side 6      
-			{ -1.0f , -1.0f, -1.0f,    0xff4b3319,     0.0f, 0.0f  },
-			{ -1.0f , -1.0f,  1.0f,    0xff4b3319,     0.0f, 1.0f  },
-			{  1.0f , -1.0f, -1.0f,    0xff4b3319,     1.0f, 0.0f  },
-
-
-
-	   };
-
-	   if (!vbo_.create(sizeof(vertices), vertices)) {
-		   return false;
-	   }
-
 	   if (!program_.create("assets/vertex_shader.txt",
 							"assets/fragment_shader.txt"))
 	   {
 		   return false;
 	   }
-	   
-	   format_.add_attribute(0, 3, GL_FLOAT, false);
-	   format_.add_attribute(1, 4, GL_UNSIGNED_BYTE, true);
-		format_.add_attribute(2, 2, GL_FLOAT, false);
-
-		if (!texture_.create("assets/bumblebee.jpg")) {
+      
+      if (!sampler_.create(GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE)) {
 			return false;
 		}
 
-		if (!sampler_.create(GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE)) {
-			return false;
-		}
+      bodies_[0] = new cube(0.0f, 0.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(0.0f, 0.0f, -50.0f), 5.0f, "assets/sun.png", &program_);
 
 	   //	note: uniforms
 		glm::mat4 projection_ = glm::perspective(glm::radians(45.0f), 
 															  16.0f / 9.0f,
 															  0.5f,
 															  100.0f);
-
-		glm::mat4 world = glm::translate(glm::mat4(1.0f),
-													glm::vec3(0.0f, 0.0f, -10.0f));
 		program_.bind();
 		program_.set_uniform_mat4("projection", glm::mat4(projection_));
-		program_.set_uniform_mat4("world", world);
-	   program_.set_uniform_vec4("mod_color", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	   
 	   GLenum error = glGetError();	
 	   if (error != GL_NO_ERROR) {
@@ -169,36 +88,28 @@ namespace neon {
    }
 
    bool testbed::tick(const time &dt) {
-      if (keyboard_.is_pressed(KEYCODE_ESCAPE)) {
-         return false;
-      }
+     if (keyboard_.is_pressed(KEYCODE_ESCAPE)) {
+        return false;
+     }
+      
+     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		rotation_ += dt.as_seconds() / 2;
-		glm::mat4 world = glm::translate(glm::mat4(1.0f),
-													glm::vec3(0.0f, 0.0f, -10.0f));
-		world = glm::rotate(world,
-								  rotation_,
-								  glm::vec3(0.5f, 0.7f, 0.0f));
+     program_.bind();
+     sampler_.bind();
 
-      glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	  program_.bind();
-	  program_.set_uniform_mat4("world", world);
-	  vbo_.bind();
-	  format_.bind();
-	  texture_.bind();
-	  sampler_.bind();
 	  glEnable(GL_DEPTH_TEST);
 
 	  glEnable(GL_CULL_FACE);
 	  glCullFace(GL_BACK);
 	  glFrontFace(GL_CW);
 
+
+     bodies_[0]->tick(dt.as_milliseconds());
+
 	  /*glEnable(GL_BLEND);
 	  glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	  glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);*/
-	  glDrawArrays(GL_TRIANGLES, 0, 99);
 
       return true;
    }
