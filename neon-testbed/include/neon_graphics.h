@@ -98,30 +98,5 @@ namespace neon {
 
 		GLuint id_;
 	};
-
-	struct bitmap_font {
-		struct vertex {
-			float x_, y_;
-			float u_, v_;
-		};
-
-		bitmap_font();
-
-		bool create();
-		void destroy();
-
-		void render(const float y, const float x, const string &text);
-		void flush();
-
-		shader_program program_;
-		vertex_format format_;
-		vertex_buffer buffer_;
-		texture texture_;
-		sampler_state sampler_;
-
-		dynamic_array<vertex> vertices_;
-		glm::mat4 projection_;
-
-	};
 } // !neon
 #endif // !NEON_GRAPHICS_H_INCLUDED
