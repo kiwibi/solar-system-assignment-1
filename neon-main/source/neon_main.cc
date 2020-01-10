@@ -260,7 +260,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance,
                    _In_ int cmd_show) 
 {
    const int width = 1280;
-   const int height = 720;
+   const int height = 1280;
    neon::string title = "neon";
 
    const char *ident = "neonTestClassName";

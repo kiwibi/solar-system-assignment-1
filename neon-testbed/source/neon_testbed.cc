@@ -2,11 +2,12 @@
 
 #include "neon_testbed.h"
 #include <cassert>
+#include <random>
 
 namespace neon {
    // note: application factory
    application *application::create(int &width, int &height, string &title) {
-      width = 1280; height = 720;
+      width = 1280; height = 1280;
       title = "neon-testbed";
       return new testbed;
    }
@@ -66,18 +67,23 @@ namespace neon {
 			return false;
 		}
 
-      bodies_[0] = new cube(0.0f, 0.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(0.0f, 0.0f, -90), 2.0f, "assets/sun.png", &program_); //sun
-	  bodies_[1] = new cube(10.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[2] = new cube(15.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[3] = new cube(20.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[4] = new cube(25.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[5] = new cube(30.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[6] = new cube(35.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[7] = new cube(40.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[8] = new cube(45.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
-	  bodies_[9] = new cube(50.0f, 2.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);
+      glm::vec3 pos = { 0.0f, 0.0f, -90.0f };
 
-	  bodies_[10] = new cube(4.0f, 6.0f, 2.0f, glm::vec2(0.8f, 0.8f), glm::vec3(6.0f, 0.0f, -90), 1.0f, "assets/zoinks.png", &program_);//moon
+      srand(0);
+
+     bodies_[0] = new cube(0.0f, 0.0f, 2.0f, glm::vec2(0.2f, 0.8f), pos, 10.0f, "assets/sun.png", &program_); //sun
+     float multiplier = 10.0f;
+	  bodies_[1] = new cube(17.74f, 4.15f , 0.006f, glm::vec2(0.0f, 1.0f), pos, 0.38f, "assets/mercury.png", &program_); // mercury
+	  bodies_[2] = new cube(24.46f, 1.63f , 0.009f, glm::vec2(0.9f, 0.1f), pos, 0.95f, "assets/venus.png", &program_); // venus
+	  bodies_[3] = new cube(30.0f, 1.0f  , 1.0f  , glm::vec2(0.7f, 0.2f), pos, 1.0f, "assets/earth.png", &program_); // earth
+	  bodies_[4] = new cube(40.4f, 0.53f , 0.971f, glm::vec2(0.7f, 0.2f), pos, 0.53f, "assets/mars.png", &program_); // mars
+	  bodies_[5] = new cube(74.0f, 0.08f , 2.42f , glm::vec2(0.1f, 0.9f), pos, 11.11f, "assets/jupiter.png", &program_); // jupiter
+	  bodies_[6] = new cube(121.6f, multiplier * 0.03f , 2.25f , glm::vec2(0.7f, 0.2f), pos, 9.45f, "assets/saturn.png", &program_); // saturn
+	  bodies_[7] = new cube(144.0f, multiplier * 0.012f, 1.39f , glm::vec2(0.6f, 0.5f), pos, 4.01f, "assets/uranus.png", &program_); // uranus
+	  bodies_[8] = new cube(161.0f, multiplier * 0.006f, 1.49f , glm::vec2(0.7f, 0.3f), pos, 3.88f, "assets/neptune.png", &program_); // neptune
+	  bodies_[9] = new cube(189.6f, multiplier * 0.004f, 0.16f , glm::vec2(0.8f, 0.2f), pos, 0.19f, "assets/pluto.png", &program_); // pluto
+
+	  bodies_[10] = new cube(2.0514f, 13.37f, 0.03f, glm::vec2(0.7f, 0.2f), pos, 0.27f, "assets/moon.png", &program_);//moon
 
 	  for (int i = 1; i < 10; i++)
 	  {
@@ -86,10 +92,12 @@ namespace neon {
 	  bodies_[10]->orbitPoint_ = bodies_[3];
 
 	   //	note: uniforms
-		glm::mat4 projection_ = glm::perspective(glm::radians(45.0f), 
+		/*glm::mat4 projection_ = glm::perspective(glm::radians(90.0f), 
 															  16.0f / 9.0f,
 															  0.5f,
-															  100.0f);
+															  1000.0f);*/
+      glm::mat4 projection_ = glm::orthoRH(-200.0f, 200.0f, 200.0f, -200.0f, 0.1f, 1000.0f);
+
 		program_.bind();
 		program_.set_uniform_mat4("projection", glm::mat4(projection_));
 	   

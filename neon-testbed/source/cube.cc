@@ -1,14 +1,15 @@
 // cube.cc
 
 #include "cube.h"
+#include <random>
 
 cube::cube(float orbitDistance, float orbitSpeed, float rotationSpeed, glm::vec2 tilt, glm::vec3 pos, float size, const char* texFilePath, neon::shader_program* shader_program){
    orbitPoint_ = nullptr;
    orbitDistance_ = orbitDistance;
-   orbit_ = 0;
+   orbit_ = (float)rand();
    orbitSpeed_ = orbitSpeed;
    rotationSpeed_ = rotationSpeed;
-   rotation_ = 0;
+   rotation_ = (float)rand();
    tilt_ = tilt;
    size_ = size;
    pos_ = pos;
@@ -120,14 +121,14 @@ bool cube::tick(float deltaTime) {
       orbit_ += orbitSpeed_ * deltaTime /1000; // Orbit = radians
       
       pos_.x = orbitPoint_->pos_.x + glm::cos(orbit_) * orbitDistance_;
-      pos_.y = orbitPoint_->pos_.y +  glm::sin(orbit_) * orbitDistance_;
+      pos_.y = orbitPoint_->pos_.y + glm::sin(orbit_) * orbitDistance_;
    }
 
    glm::mat4 world = glm::translate(glm::mat4(1.0f),
                                     pos_);
    world = glm::rotate(world,
                        rotation_,
-                       glm::vec3(tilt_.x, tilt_.y, 0.0f));
+                       glm::vec3(tilt_.x, 0.0f, tilt_.y));
 
    program_->bind();
    program_->set_uniform_mat4("world", world);
